@@ -18,7 +18,7 @@ type SignInFormValues = {
   password: string;
 };
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const { handleSubmit, register, formState } = useForm<SignInFormValues>({
     defaultValues: {
       email: '',
@@ -33,7 +33,7 @@ const SignUpForm = () => {
 
     signInWithEmailAndPassword(fireauth, email, password)
       .then(() => {
-        localStorage.removeItem('todos');
+        navigate('/', { replace: true });
       })
       .catch((e: FirebaseError) => {
         if (e instanceof FirebaseError) {
@@ -130,4 +130,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

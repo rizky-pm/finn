@@ -2,6 +2,7 @@ import { Flex, Container, Box, Image, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 import SignInHero from '../../assets/images/signin.jpg';
+import SignInForm from '../../components/SignInForm';
 
 const StyledSignInPage = styled.main`
   max-height: 100vh;
@@ -43,6 +44,7 @@ const SignInPage = () => {
             <Text as={'p'} mt={-4} mb={4} fontWeight={'regular'} fontSize='md'>
               Stay In Control. Track Every Expense with Finn.
             </Text>
+            <SignInForm />
           </Container>
         </Box>
       </Flex>
