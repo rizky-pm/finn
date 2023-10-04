@@ -3,11 +3,17 @@
 *::after {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  border: 0;
   font-family: 'Montserrat', sans-serif;
 }
 
 html,
 body {
   line-height: 1;
+}
+
+ol,
+ul,
+li {
+  list-style: none;
 }

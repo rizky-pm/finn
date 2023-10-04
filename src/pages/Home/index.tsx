@@ -6,10 +6,10 @@ const Home = () => {
     <main>
       <h1>Home Page</h1>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam fuga magni
-        distinctio accusantium assumenda tempora, molestiae, nihil, ut
-        repellendus doloremque possimus officia consequuntur rem quae dolorem
-        quia repudiandae sed facilis?
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
+        repellendus quo praesentium laboriosam eveniet quae odit laborum
+        debitis, doloribus nostrum recusandae, et ipsa nam. Quos corporis labore
+        non eaque reprehenderit?
       </p>
 
       <button
