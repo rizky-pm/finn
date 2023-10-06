@@ -1,4 +1,8 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
+import { signOut } from 'firebase/auth';
+import { NavLink } from 'react-router-dom';
+
+import { fireauth } from '../../config/firebase';
 
 const Sidebar = () => {
   return (
@@ -7,26 +11,67 @@ const Sidebar = () => {
       width={'15%'}
       bg={'brand.black'}
       color={'brand.white'}
-      px={6}
-      py={4}
-      minHeight={'100vh'}
+      h={'100vh'}
+      pos={'sticky'}
+      top={0}
+      p={4}
     >
-      <Box position={'fixed'}>
-        <Flex flexDirection={'column'}>
-          <Text fontSize={'3xl'} fontWeight={'bold'}>
+      <Flex
+        as={'ul'}
+        pos={'sticky'}
+        top={0}
+        flexDirection={'column'}
+        h={'100%'}
+        border={'none'}
+        outline={'none'}
+      >
+        <Box as='li'>
+          <Text fontSize={'3xl'} fontWeight={'bold'} px={2}>
             Finn
           </Text>
+        </Box>
 
-          <ul>
-            <Box as='li' bg={'red.500'}>
-              Dashboard
-            </Box>
-            <Box as='li'>Transactions</Box>
-            <Box as='li'>Profile</Box>
-            <Box as='li'>Sign Out</Box>
-          </ul>
-        </Flex>
-      </Box>
+        <Box as='li'>
+          <NavLink
+            to={'/'}
+            className={({ isActive }) =>
+              isActive ? 'nav-link-active' : 'nav-link'
+            }
+          >
+            <Text variant={'sidebarLink'}>Dashboard</Text>
+          </NavLink>
+        </Box>
+        <Box as='li'>
+          <NavLink
+            to={'/transactions'}
+            className={({ isActive }) =>
+              isActive ? 'nav-link-active' : 'nav-link'
+            }
+          >
+            <Text variant={'sidebarLink'}>Transactions</Text>
+          </NavLink>
+        </Box>
+        <Box as='li'>
+          <NavLink
+            to={'/profile'}
+            className={({ isActive }) =>
+              isActive ? 'nav-link-active' : 'nav-link'
+            }
+          >
+            <Text variant={'sidebarLink'}>Profile</Text>
+          </NavLink>
+        </Box>
+        <Box as='li' mt={'auto'}>
+          <Text
+            variant={'sidebarLink'}
+            onClick={() => {
+              signOut(fireauth);
+            }}
+          >
+            Sign Out
+          </Text>
+        </Box>
+      </Flex>
     </Box>
   );
 };

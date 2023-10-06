@@ -20,9 +20,7 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     <>
       <Flex>
         <Sidebar />
-        <Box width={'85%'} px={6} py={6}>
-          {children}
-        </Box>
+        <Box width={'85%'}>{children}</Box>
       </Flex>
     </>
   );

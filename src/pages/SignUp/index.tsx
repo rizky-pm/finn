@@ -1,8 +1,11 @@
 import { Flex, Container, Box, Image, Text } from '@chakra-ui/react';
+import { Navigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 
+import Splashscreen from '../../components/Splashscreen';
 import SignUpHero from '../../assets/images/signup.jpg';
 import SignUpForm from '../../components/SignUpForm';
+import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 
 const StyledSignUpPage = styled.main`
   max-height: 100vh;
@@ -10,6 +13,16 @@ const StyledSignUpPage = styled.main`
 `;
 
 const SignUpPage = () => {
+  const { user, isLoading } = useFirebaseAuth();
+
+  if (isLoading) {
+    return <Splashscreen />;
+  }
+
+  if (user) {
+    return <Navigate to={'/'} />;
+  }
+
   return (
     <StyledSignUpPage>
       <Flex>

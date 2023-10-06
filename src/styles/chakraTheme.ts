@@ -39,11 +39,39 @@ const Button = defineStyleConfig({
         bg: 'brand.blackLight',
       },
     },
+    text: {
+      bg: 'transparent',
+      color: 'brand.white',
+      p: 0,
+      _hover: {
+        color: 'brand.whitePlatinum',
+      },
+    },
   },
   // The default size and variant values
   defaultProps: {
     size: 'sm',
     variant: 'solid',
+  },
+});
+
+const Text = defineStyleConfig({
+  baseStyle: {
+    fontWeight: 'semibold',
+    transition: 'all 0.1s ease',
+    cursor: 'pointer',
+    textDecor: 'none',
+    borderRadius: 'sm',
+  },
+  variants: {
+    sidebarLink: {
+      color: 'brand.white',
+      padding: 2,
+      _hover: {
+        color: 'brand.black',
+        backgroundColor: 'brand.white',
+      },
+    },
   },
 });
 
@@ -68,6 +96,7 @@ const chakraTheme = extendTheme({
   },
   components: {
     Button,
+    Text,
   },
 });
 

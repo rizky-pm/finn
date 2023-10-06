@@ -13,7 +13,7 @@ import Footer from './components/Footer/index.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ChakraProvider theme={chakraTheme}>
-      <CSSReset />
+      {/* <CSSReset /> */}
       {/* <Navbar /> */}
       <RouterProvider router={router} />
       {/* <Footer /> */}
