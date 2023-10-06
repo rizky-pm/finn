@@ -1,10 +1,12 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { signOut } from 'firebase/auth';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import { fireauth } from '../../config/firebase';
 
 const Sidebar = () => {
+  const { pathname } = useLocation();
+
   return (
     <Box
       as='nav'
@@ -19,58 +21,52 @@ const Sidebar = () => {
       <Flex
         as={'ul'}
         pos={'sticky'}
+        rowGap={2}
         top={0}
         flexDirection={'column'}
         h={'100%'}
         border={'none'}
         outline={'none'}
       >
-        <Box as='li'>
-          <Text fontSize={'3xl'} fontWeight={'bold'} px={2}>
-            Finn
-          </Text>
-        </Box>
+        <Text as={'li'} fontSize={'3xl'} fontWeight={'bold'} px={2}>
+          Finn
+        </Text>
 
-        <Box as='li'>
-          <NavLink
-            to={'/'}
-            className={({ isActive }) =>
-              isActive ? 'nav-link-active' : 'nav-link'
-            }
-          >
-            <Text variant={'sidebarLink'}>Dashboard</Text>
-          </NavLink>
-        </Box>
-        <Box as='li'>
-          <NavLink
-            to={'/transactions'}
-            className={({ isActive }) =>
-              isActive ? 'nav-link-active' : 'nav-link'
-            }
-          >
-            <Text variant={'sidebarLink'}>Transactions</Text>
-          </NavLink>
-        </Box>
-        <Box as='li'>
-          <NavLink
-            to={'/profile'}
-            className={({ isActive }) =>
-              isActive ? 'nav-link-active' : 'nav-link'
-            }
-          >
-            <Text variant={'sidebarLink'}>Profile</Text>
-          </NavLink>
-        </Box>
-        <Box as='li' mt={'auto'}>
-          <Text
-            variant={'sidebarLink'}
-            onClick={() => {
-              signOut(fireauth);
-            }}
-          >
-            Sign Out
-          </Text>
-        </Box>
+        <Text
+          as={'li'}
+          variant={pathname === '/' ? 'sidebarLinkActive' : 'sidebarLink'}
+        >
+          <NavLink to={'/'}>Dashboard</NavLink>
+        </Text>
+
+        <Text
+          as={'li'}
+          variant={
+            pathname === '/transactions' ? 'sidebarLinkActive' : 'sidebarLink'
+          }
+        >
+          <NavLink to={'/transactions'}>Transactions</NavLink>
+        </Text>
+
+        <Text
+          as={'li'}
+          variant={
+            pathname === '/profile' ? 'sidebarLinkActive' : 'sidebarLink'
+          }
+        >
+          <NavLink to={'/profile'}>Profile</NavLink>
+        </Text>
+
+        <Text
+          as={'li'}
+          mt={'auto'}
+          variant={'sidebarLink'}
+          onClick={() => {
+            signOut(fireauth);
+          }}
+        >
+          Sign Out
+        </Text>
       </Flex>
     </Box>
   );

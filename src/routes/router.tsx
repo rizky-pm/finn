@@ -4,6 +4,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import Home from '../pages/Home';
 import SignUpPage from '../pages/SignUp';
 import SignInPage from '../pages/SignIn';
+import Transactions from '../pages/Transactions';
 
 const router = createBrowserRouter([
   {
@@ -11,6 +12,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Home />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/transactions',
+    element: (
+      <ProtectedRoute>
+        <Transactions />
       </ProtectedRoute>
     ),
   },
