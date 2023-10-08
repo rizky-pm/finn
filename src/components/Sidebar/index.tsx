@@ -20,7 +20,7 @@ const Sidebar = () => {
     >
       <Stack as={'ul'} pos={'sticky'} spacing={2} top={0} h={'100%'}>
         <Box as='li'>
-          <Text fontSize={'3xl'} fontWeight={'bold'} px={2}>
+          <Text fontSize={'3xl'} fontWeight={'bold'}>
             Finn
           </Text>
         </Box>

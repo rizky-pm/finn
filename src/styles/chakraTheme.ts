@@ -4,6 +4,10 @@ import Button from './custom/Button';
 import Text from './custom/Text';
 
 const chakraTheme = extendTheme({
+  fonts: {
+    heading: `'Montserrat', sans-serif`,
+    body: `'Montserrat', sans-serif`,
+  },
   colors: {
     brand: {
       white: '#FAFAFF',
