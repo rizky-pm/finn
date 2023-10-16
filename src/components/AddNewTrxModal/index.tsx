@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 import { firestore } from '../../config/firebase';
@@ -56,40 +56,76 @@ const AddNewTrxModal = ({ isOpen, onClose }: ModalProps) => {
   const { errors } = formState;
 
   const handleAddNewTrx = async (values: AddNewTrxValues) => {
+    if (!user) return;
+
     const { title, amount, category } = values;
+    if (!title || !amount || !category) return;
 
-    if (user && title && amount && category) {
-      setIsSubmitting(true);
-      const { currentUnix } = dateUtils();
-      const randomUUID = uuidv4();
+    setIsSubmitting(true);
+    const { currentUnix } = dateUtils();
+    const randomUUID = uuidv4();
 
-      const categoryRef = doc(firestore, 'categories', category);
+    const categoryRef = doc(firestore, 'categories', category);
+    const userRef = doc(firestore, 'users', user.uid);
+    const [categorySnap, userSnap] = await Promise.all([
+      getDoc(categoryRef),
+      getDoc(userRef),
+    ]);
 
-      const payload: TransactionType = {
-        id: randomUUID,
-        userId: user?.uid,
-        createdAt: currentUnix,
-        category: categoryRef,
-        title,
-        amount,
-      };
+    const payload: TransactionType = {
+      id: randomUUID,
+      userId: user.uid,
+      createdAt: currentUnix,
+      category: categoryRef,
+      title,
+      amount,
+    };
 
-      try {
-        await setDoc(doc(firestore, 'transactions', randomUUID), payload);
+    try {
+      await setDoc(doc(firestore, 'transactions', randomUUID), payload);
 
-        setMessage({
-          type: 'success',
-          text: 'Transaction Added',
-        });
+      if (userSnap.exists()) {
+        if (categorySnap.exists() && categorySnap.data().type === 'Outcome') {
+          const updatedUser = {
+            total_money: userSnap.data().total_money - parseInt(amount),
+          };
 
-        setIsSubmitting(false);
-        reset();
-      } catch (error) {
-        console.log(error);
+          try {
+            await setDoc(doc(firestore, 'users', user.uid), updatedUser, {
+              merge: true,
+            });
+          } catch (error) {
+            console.error('Error updating user document: ', error);
+          }
+        } else if (
+          categorySnap.exists() &&
+          categorySnap.data().type === 'Income'
+        ) {
+          const updatedUser = {
+            total_money: userSnap.data().total_money + parseInt(amount),
+          };
+
+          try {
+            await setDoc(doc(firestore, 'users', user.uid), updatedUser, {
+              merge: true,
+            });
+          } catch (error) {
+            console.error('Error updating user document: ', error);
+          }
+        }
       }
 
-      setIsSubmitting(false);
+      setMessage({
+        type: 'success',
+        text: 'Transaction Added',
+      });
+
+      reset();
+    } catch (error) {
+      console.error('Error adding transaction: ', error);
     }
+
+    setIsSubmitting(false);
   };
 
   const handleCloseModal = () => {
@@ -126,7 +162,7 @@ const AddNewTrxModal = ({ isOpen, onClose }: ModalProps) => {
                   })}
                 >
                   <option value='transportation'>Transportation</option>
-                  <option value='foodanddrink'>Food And Drink</option>
+                  <option value='food-and-drink'>Food And Drink</option>
                   <option value='salary'>Salary</option>
                 </Select>
                 <FormErrorMessage>

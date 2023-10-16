@@ -193,7 +193,7 @@ const Home = () => {
             <Stat>
               <StatNumber>
                 <Text maxW={'225px'} fontSize={'3xl'}>
-                  Rp 580.000,00
+                  Rp 694.200,00
                 </Text>
               </StatNumber>
             </Stat>

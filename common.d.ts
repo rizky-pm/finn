@@ -9,6 +9,11 @@ export interface TransactionType {
   createdAt: number;
 }
 
+export interface CategoryType {
+  name: string;
+  type: 'Outcome' | 'Income';
+}
+
 export type MessageType = {
   type: null | 'error' | 'success' | 'warning';
   text: string;
